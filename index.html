@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Worldwide Knowledge Challenge</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #071a3d;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+h1 {
+    font-size: 42px;
+    margin-bottom: 5px;
+}
+
+.tagline {
+    font-size: 21px;
+    color: #ffd54a;
+    margin-bottom: 35px;
+}
+
+button {
+    display: block;
+    width: 90%;
+    max-width: 600px;
+    margin: 12px auto;
+    padding: 16px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.start {
+    background: #ffd54a;
+    color: #071a3d;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.answer {
+    background: white;
+    color: #071a3d;
+}
+
+.answer:hover {
+    background: #e4edff;
+}
+
+#game, #result {
+    display: none;
+}
+
+#explanation {
+    margin: 25px auto;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+#next {
+    display: none;
+    background: #ffd54a;
+    color: #071a3d;
+    font-weight: bold;
+}
+
+.score {
+    font-size: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="welcome">
+    <h1>WORLDWIDE KNOWLEDGE CHALLENGE</h1>
+    <div class="tagline">One World. One Challenge. Endless Knowledge.</div>
+
+    <p>
+    Test your knowledge. Learn something new with every question.
+    Challenge yourself and, soon, challenge the world.
+    </p>
+
+    <button class="start" onclick="startGame()">START CHALLENGE</button>
+</div>
+
+<div id="game">
+    <div class="score">
+        Question <span id="number"></span> of <span id="total"></span>
+        &nbsp; | &nbsp;
+        Score: <span id="score">0</span>
+    </div>
+
+    <h2 id="question"></h2>
+
+    <div id="answers"></div>
+
+    <div id="explanation"></div>
+
+    <button id="next" onclick="nextQuestion()">NEXT QUESTION</button>
+</div>
+
+<div id="result">
+    <h1>CHALLENGE COMPLETE!</h1>
+    <h2>Your Score</h2>
+    <h1 id="finalScore"></h1>
+
+    <p>
+    Knowledge grows every time we learn something new.
+    Thank you for taking the WORLDWIDE KNOWLEDGE CHALLENGE.
+    </p>
+
+    <button class="start" onclick="restartGame()">PLAY AGAIN</button>
+</div>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+question: "What is the largest ocean on Earth?",
+answers: ["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"],
+correct: 2,
+explanation: "The Pacific Ocean is the largest and deepest ocean on Earth, covering more than 30% of the planet's surface."
+},
+
+{
+question: "Which planet is known as the Red Planet?",
+answers: ["Venus","Mars","Jupiter","Mercury"],
+correct: 1,
+explanation: "Mars appears reddish because iron minerals in its soil oxidize, or rust."
+},
+
+{
+question: "What is the capital of Australia?",
+answers: ["Sydney","Melbourne","Canberra","Perth"],
+correct: 2,
+explanation: "Canberra is Australia's capital. It was selected as a compromise between the larger cities of Sydney and Melbourne."
+},
+
+{
+question: "Who painted the Mona Lisa?",
+answers: ["Michelangelo","Leonardo da Vinci","Vincent van Gogh","Pablo Picasso"],
+correct: 1,
+explanation: "Leonardo da Vinci painted the Mona Lisa, one of the world's most famous works of art."
+},
+
+{
+question: "What gas do plants absorb from the atmosphere during photosynthesis?",
+answers: ["Oxygen","Nitrogen","Hydrogen","Carbon dioxide"],
+correct: 3,
+explanation: "Plants absorb carbon dioxide and use light energy to help produce sugars during photosynthesis."
+},
+
+{
+question: "Which is the largest planet in our solar system?",
+answers: ["Earth","Saturn","Jupiter","Neptune"],
+correct: 2,
+explanation: "Jupiter is the largest planet in our solar system and is more massive than all the other planets combined."
+},
+
+{
+question: "How many continents are commonly recognized?",
+answers: ["Five","Six","Seven","Eight"],
+correct: 2,
+explanation: "The seven-continent model recognizes Africa, Antarctica, Asia, Europe, North America, South America and Australia."
+},
+
+{
+question: "Which ancient civilization built Machu Picchu?",
+answers: ["Roman","Inca","Egyptian","Greek"],
+correct: 1,
+explanation: "Machu Picchu was built by the Inca civilization in the Andes Mountains of present-day Peru."
+},
+
+{
+question: "What is the chemical symbol for gold?",
+answers: ["Go","Gd","Au","Ag"],
+correct: 2,
+explanation: "The chemical symbol for gold is Au, derived from the Latin word 'aurum.'"
+},
+
+{
+question: "Which instrument is used to measure earthquakes?",
+answers: ["Barometer","Seismograph","Thermometer","Altimeter"],
+correct: 1,
+explanation: "A seismograph detects and records ground motion produced by seismic waves."
+}
+
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function startGame() {
+    document.getElementById("welcome").style.display = "none";
+    document.getElementById("game").style.display = "block";
+    document.getElementById("total").innerText = questions.length;
+    showQuestion();
+}
+
+function showQuestion() {
+    answered = false;
+
+    const q = questions[current];
+
+    document.getElementById("number").innerText = current + 1;
+    document.getElementById("question").innerText = q.question;
+    document.getElementById("explanation").innerHTML = "";
+    document.getElementById("next").style.display = "none";
+
+    const answersDiv = document.getElementById("answers");
+    answersDiv.innerHTML = "";
+
+    q.answers.forEach((answer, index) => {
+        const button = document.createElement("button");
+        button.className = "answer";
+        button.innerText = answer;
+        button.onclick = () => checkAnswer(index);
+        answersDiv.appendChild(button);
+    });
+}
+
+function checkAnswer(selected) {
+
+    if (answered) return;
+
+    answered = true;
+
+    const q = questions[current];
+    const buttons = document.querySelectorAll(".answer");
+
+    buttons.forEach((button, index) => {
+        button.disabled = true;
+
+        if (index === q.correct) {
+            button.style.background = "#8ee89b";
+        }
+
+        if (index === selected && selected !== q.correct) {
+            button.style.background = "#ff9999";
+        }
+    });
+
+    if (selected === q.correct) {
+        score++;
+        document.getElementById("score").innerText = score;
+
+        document.getElementById("explanation").innerHTML =
+        "<strong>Correct!</strong><br><br>" + q.explanation;
+    } else {
+        document.getElementById("explanation").innerHTML =
+        "<strong>Not quite.</strong><br><br>" + q.explanation;
+    }
+
+    document.getElementById("next").style.display = "block";
+}
+
+function nextQuestion() {
+
+    current++;
+
+    if (current < questions.length) {
+        showQuestion();
+    } else {
+        finishGame();
+    }
+}
+
+function finishGame() {
+
+    document.getElementById("game").style.display = "none";
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("finalScore").innerText =
+        score + " / " + questions.length;
+}
+
+function restartGame() {
+
+    current = 0;
+    score = 0;
+
+    document.getElementById("score").innerText = "0";
+    document.getElementById("result").style.display = "none";
+    document.getElementById("game").style.display = "block";
+
+    showQuestion();
+}
+
+</script>
+
+</body>
+</html>
