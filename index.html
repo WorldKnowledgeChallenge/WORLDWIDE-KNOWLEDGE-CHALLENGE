@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,79 +6,86 @@
 <title>Worldwide Knowledge Challenge</title>
 
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #071a3d;
-    color: white;
-    text-align: center;
-    margin: 0;
-    padding: 0;
+body{
+    font-family:Arial,sans-serif;
+    background:#071a3d;
+    color:white;
+    text-align:center;
+    margin:0;
 }
-
-.container {
-    max-width: 800px;
-    margin: auto;
-    padding: 40px 20px;
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:35px 20px;
 }
-
-h1 {
-    font-size: 42px;
-    margin-bottom: 5px;
+h1{
+    font-size:42px;
+    margin-bottom:5px;
 }
-
-.tagline {
-    font-size: 21px;
-    color: #ffd54a;
-    margin-bottom: 35px;
+.tagline{
+    font-size:21px;
+    color:#ffd54a;
+    margin-bottom:30px;
 }
-
-button {
-    display: block;
-    width: 90%;
-    max-width: 600px;
-    margin: 12px auto;
-    padding: 16px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+button{
+    display:block;
+    width:90%;
+    max-width:650px;
+    margin:12px auto;
+    padding:16px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
 }
-
-.start {
-    background: #ffd54a;
-    color: #071a3d;
-    font-weight: bold;
-    font-size: 22px;
+.start,.next{
+    background:#ffd54a;
+    color:#071a3d;
+    font-weight:bold;
 }
-
-.answer {
-    background: white;
-    color: #071a3d;
+.category{
+    background:white;
+    color:#071a3d;
+    font-weight:bold;
 }
-
-.answer:hover {
-    background: #e4edff;
+.category:hover,.answer:hover{
+    background:#e4edff;
 }
-
-#game, #result {
-    display: none;
+.answer{
+    background:white;
+    color:#071a3d;
 }
-
-#explanation {
-    margin: 25px auto;
-    font-size: 18px;
-    line-height: 1.5;
+#categories,#game,#result{
+    display:none;
 }
-
-#next {
-    display: none;
-    background: #ffd54a;
-    color: #071a3d;
-    font-weight: bold;
+#explanation{
+    margin:25px auto;
+    padding:18px;
+    max-width:650px;
+    font-size:18px;
+    line-height:1.5;
+    border-radius:10px;
 }
-
-.score {
-    font-size: 20px;
+#next{
+    display:none;
+}
+.score{
+    font-size:19px;
+    margin-bottom:25px;
+}
+.correct{
+    color:#8ee89b;
+    font-size:22px;
+    font-weight:bold;
+}
+.wrong{
+    color:#ff9999;
+    font-size:22px;
+    font-weight:bold;
+}
+.education{
+    color:#ffd54a;
+    font-weight:bold;
 }
 </style>
 </head>
@@ -88,222 +95,436 @@ button {
 <div class="container">
 
 <div id="welcome">
-    <h1>WORLDWIDE KNOWLEDGE CHALLENGE</h1>
-    <div class="tagline">One World. One Challenge. Endless Knowledge.</div>
+<h1>WORLDWIDE KNOWLEDGE CHALLENGE</h1>
 
-    <p>
-    Test your knowledge. Learn something new with every question.
-    Challenge yourself and, soon, challenge the world.
-    </p>
+<div class="tagline">
+One World. One Challenge. Endless Knowledge.
+</div>
 
-    <button class="start" onclick="startGame()">START CHALLENGE</button>
+<p>
+Test your knowledge. Learn something new with every question.
+Choose a category and challenge yourself.
+</p>
+
+<button class="start" onclick="showCategories()">
+START CHALLENGE
+</button>
+</div>
+
+<div id="categories">
+<h1>CHOOSE YOUR CATEGORY</h1>
+<p>What would you like to explore today?</p>
+<div id="categoryButtons"></div>
 </div>
 
 <div id="game">
-    <div class="score">
-        Question <span id="number"></span> of <span id="total"></span>
-        &nbsp; | &nbsp;
-        Score: <span id="score">0</span>
-    </div>
 
-    <h2 id="question"></h2>
+<div class="score">
+<span id="categoryName"></span>
+<br><br>
 
-    <div id="answers"></div>
+Question <span id="number"></span>
+of <span id="total"></span>
 
-    <div id="explanation"></div>
+&nbsp; | &nbsp;
 
-    <button id="next" onclick="nextQuestion()">NEXT QUESTION</button>
+Score: <span id="score">0</span>
+</div>
+
+<h2 id="question"></h2>
+
+<div id="answers"></div>
+
+<div id="explanation"></div>
+
+<button id="next" class="next" onclick="nextQuestion()">
+NEXT QUESTION
+</button>
+
 </div>
 
 <div id="result">
-    <h1>CHALLENGE COMPLETE!</h1>
-    <h2>Your Score</h2>
-    <h1 id="finalScore"></h1>
 
-    <p>
-    Knowledge grows every time we learn something new.
-    Thank you for taking the WORLDWIDE KNOWLEDGE CHALLENGE.
-    </p>
+<h1>CHALLENGE COMPLETE!</h1>
 
-    <button class="start" onclick="restartGame()">PLAY AGAIN</button>
+<h2 id="finishedCategory"></h2>
+
+<h2>Your Score</h2>
+
+<h1 id="finalScore"></h1>
+
+<p>
+Knowledge grows every time we learn something new.
+Thank you for taking the WORLDWIDE KNOWLEDGE CHALLENGE.
+</p>
+
+<button class="start" onclick="playAgain()">
+PLAY THIS CATEGORY AGAIN
+</button>
+
+<button class="category" onclick="chooseAnother()">
+CHOOSE ANOTHER CATEGORY
+</button>
+
 </div>
 
 </div>
 
 <script>
 
-const questions = [
-
+const questionBank = { "GEOGRAPHY":[
 {
-question: "What is the largest ocean on Earth?",
-answers: ["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"],
-correct: 2,
-explanation: "The Pacific Ocean is the largest and deepest ocean on Earth, covering more than 30% of the planet's surface."
+q:"What is the largest ocean on Earth?",
+a:["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"],
+c:2,
+e:"The Pacific Ocean is the largest and deepest ocean on Earth, covering more than 30% of the planet's surface."
 },
-
 {
-question: "Which planet is known as the Red Planet?",
-answers: ["Venus","Mars","Jupiter","Mercury"],
-correct: 1,
-explanation: "Mars appears reddish because iron minerals in its soil oxidize, or rust."
+q:"What is the capital of Australia?",
+a:["Sydney","Melbourne","Canberra","Perth"],
+c:2,
+e:"Canberra is Australia's capital. It was selected partly as a compromise between Sydney and Melbourne."
 },
-
 {
-question: "What is the capital of Australia?",
-answers: ["Sydney","Melbourne","Canberra","Perth"],
-correct: 2,
-explanation: "Canberra is Australia's capital. It was selected as a compromise between the larger cities of Sydney and Melbourne."
+q:"Which is the largest continent by area?",
+a:["Africa","Asia","Europe","North America"],
+c:1,
+e:"Asia is the world's largest continent by area and is also home to more people than any other continent."
+}
+],
+
+"WORLD HISTORY":[
+{
+q:"Which ancient civilization built Machu Picchu?",
+a:["Roman","Inca","Egyptian","Greek"],
+c:1,
+e:"Machu Picchu was built by the Inca civilization in the Andes Mountains of present-day Peru."
 },
-
 {
-question: "Who painted the Mona Lisa?",
-answers: ["Michelangelo","Leonardo da Vinci","Vincent van Gogh","Pablo Picasso"],
-correct: 1,
-explanation: "Leonardo da Vinci painted the Mona Lisa, one of the world's most famous works of art."
+q:"In which year did the French Revolution begin?",
+a:["1688","1776","1789","1815"],
+c:2,
+e:"The French Revolution began in 1789. The storming of the Bastille became one of its defining early events."
 },
-
 {
-question: "What gas do plants absorb from the atmosphere during photosynthesis?",
-answers: ["Oxygen","Nitrogen","Hydrogen","Carbon dioxide"],
-correct: 3,
-explanation: "Plants absorb carbon dioxide and use light energy to help produce sugars during photosynthesis."
+q:"Who became Emperor of the French in 1804?",
+a:["Louis XVI","Napoleon Bonaparte","Robespierre","Charles de Gaulle"],
+c:1,
+e:"Napoleon Bonaparte became Emperor of the French in 1804 after rising to power following the French Revolution."
+}
+],
+
+"SCIENCE & NATURE":[
+{
+q:"Which planet is known as the Red Planet?",
+a:["Venus","Mars","Jupiter","Mercury"],
+c:1,
+e:"Mars appears reddish because iron minerals in its soil oxidize, producing iron oxide similar to rust."
 },
-
 {
-question: "Which is the largest planet in our solar system?",
-answers: ["Earth","Saturn","Jupiter","Neptune"],
-correct: 2,
-explanation: "Jupiter is the largest planet in our solar system and is more massive than all the other planets combined."
+q:"What gas do plants absorb during photosynthesis?",
+a:["Oxygen","Nitrogen","Hydrogen","Carbon dioxide"],
+c:3,
+e:"Plants absorb carbon dioxide and use energy from sunlight to help produce sugars, releasing oxygen in the process."
 },
-
 {
-question: "How many continents are commonly recognized?",
-answers: ["Five","Six","Seven","Eight"],
-correct: 2,
-explanation: "The seven-continent model recognizes Africa, Antarctica, Asia, Europe, North America, South America and Australia."
+q:"What is the chemical symbol for gold?",
+a:["Go","Gd","Au","Ag"],
+c:2,
+e:"The chemical symbol for gold is Au, derived from the Latin word 'aurum.'"
+}
+],
+
+"RELIGION & RELIGIOUS HISTORY":[
+{
+q:"What is the sacred scripture of Sikhism called?",
+a:["Guru Granth Sahib","Vedas","Tripitaka","Avesta"],
+c:0,
+e:"The Guru Granth Sahib is Sikhism's central sacred scripture and is regarded by Sikhs as the eternal Guru."
 },
-
 {
-question: "Which ancient civilization built Machu Picchu?",
-answers: ["Roman","Inca","Egyptian","Greek"],
-correct: 1,
-explanation: "Machu Picchu was built by the Inca civilization in the Andes Mountains of present-day Peru."
+q:"Which ancient Jewish historian wrote Antiquities of the Jews?",
+a:["Flavius Josephus","Herodotus","Tacitus","Plutarch"],
+c:0,
+e:"Flavius Josephus wrote Antiquities of the Jews in the first century CE, presenting Jewish history for a Greco-Roman audience."
 },
-
 {
-question: "What is the chemical symbol for gold?",
-answers: ["Go","Gd","Au","Ag"],
-correct: 2,
-explanation: "The chemical symbol for gold is Au, derived from the Latin word 'aurum.'"
+q:"Which religion originated in 19th-century Persia and emphasizes the unity of humanity?",
+a:["Baháʼí Faith","Jainism","Shinto","Taoism"],
+c:0,
+e:"The Baháʼí Faith originated in 19th-century Persia and teaches principles including the unity of humanity."
+}
+],
+
+"WORLD CULTURES & TRADITIONS":[
+{
+q:"What is the traditional Japanese garment often worn on special occasions?",
+a:["Sari","Kimono","Hanbok","Kilt"],
+c:1,
+e:"The kimono is a traditional Japanese garment recognized by its T-shaped form, wrapped front and wide sleeves."
 },
-
 {
-question: "Which instrument is used to measure earthquakes?",
-answers: ["Barometer","Seismograph","Thermometer","Altimeter"],
-correct: 1,
-explanation: "A seismograph detects and records ground motion produced by seismic waves."
+q:"Which Indian festival is commonly known as the Festival of Colors?",
+a:["Diwali","Holi","Navratri","Pongal"],
+c:1,
+e:"Holi is celebrated with colored powders and water and is associated with spring and renewal."
+},
+{
+q:"Which country is especially associated with the tango?",
+a:["Argentina","Brazil","Chile","Peru"],
+c:0,
+e:"Tango developed along the Río de la Plata, particularly in Buenos Aires and Montevideo, during the late 19th century."
+}
+],
+
+"ARTS & LITERATURE":[
+{
+q:"Who painted the Mona Lisa?",
+a:["Michelangelo","Leonardo da Vinci","Vincent van Gogh","Pablo Picasso"],
+c:1,
+e:"Leonardo da Vinci painted the Mona Lisa, one of the world's most famous portraits. It is displayed at the Louvre in Paris."
+},
+{
+q:"Who wrote Romeo and Juliet?",
+a:["Charles Dickens","William Shakespeare","Homer","Mark Twain"],
+c:1,
+e:"William Shakespeare wrote Romeo and Juliet in the late 16th century. It remains one of the world's best-known tragedies."
+},
+{
+q:"Who painted The Starry Night?",
+a:["Claude Monet","Vincent van Gogh","Rembrandt","Salvador Dalí"],
+c:1,
+e:"Vincent van Gogh painted The Starry Night in 1889 while staying at Saint-Rémy-de-Provence in France."
+}
+],
+
+"SPORTS":[
+{
+q:"How many players does a soccer team normally have on the field at one time?",
+a:["9","10","11","12"],
+c:2,
+e:"A soccer team normally has 11 players on the field, including the goalkeeper."
+},
+{
+q:"In tennis, what is the term for a score of zero?",
+a:["Nil","Love","Blank","Zero"],
+c:1,
+e:"In tennis scoring, zero is called 'love.' The precise historical origin of the term remains debated."
+},
+{
+q:"How often are the Summer Olympic Games normally held?",
+a:["Every 2 years","Every 3 years","Every 4 years","Every 5 years"],
+c:2,
+e:"The Summer Olympic Games are normally held every four years, although exceptional events have sometimes disrupted the schedule."
+}
+],
+
+"TECHNOLOGY & INVENTIONS":[
+{
+q:"Who is credited with inventing the World Wide Web?",
+a:["Bill Gates","Tim Berners-Lee","Steve Jobs","Alan Turing"],
+c:1,
+e:"Tim Berners-Lee proposed the World Wide Web in 1989 while working at CERN."
+},
+{
+q:"What does CPU stand for?",
+a:["Central Processing Unit","Computer Personal Utility","Central Program User","Core Processing Utility"],
+c:0,
+e:"CPU means Central Processing Unit. It executes instructions and performs many of a computer's fundamental operations."
+},
+{
+q:"What does GPS stand for?",
+a:["Global Positioning System","General Positioning Service","Global Program Satellite","Geographic Placement System"],
+c:0,
+e:"GPS stands for Global Positioning System. It uses satellites to provide positioning, navigation and timing information."
+}
+],
+
+"ENTERTAINMENT & MUSIC":[
+{
+q:"Which instrument typically has 88 keys?",
+a:["Violin","Piano","Trumpet","Flute"],
+c:1,
+e:"A standard modern piano has 88 keys: 52 white keys and 36 black keys."
+},
+{
+q:"Which family of instruments does the violin belong to?",
+a:["Brass","Woodwind","String","Percussion"],
+c:2,
+e:"The violin belongs to the string family. Sound is produced by vibrating its strings, usually with a bow."
+},
+{
+q:"Which musical symbol indicates a period of silence?",
+a:["Rest","Clef","Sharp","Flat"],
+c:0,
+e:"A rest is a musical notation symbol indicating silence. Different rest symbols represent different durations."
+}
+],
+
+"WORLD & GENERAL KNOWLEDGE":[
+{
+q:"Which city is famous for the Eiffel Tower?",
+a:["Rome","Paris","Madrid","Vienna"],
+c:1,
+e:"The Eiffel Tower stands in Paris, France. It was completed for the 1889 Exposition Universelle."
+},
+{
+q:"The Statue of Liberty was a gift to the United States from which country?",
+a:["United Kingdom","France","Spain","Italy"],
+c:1,
+e:"France presented the Statue of Liberty to the United States. It was dedicated in New York Harbor in 1886."
+},
+{
+q:"What does CEO stand for?",
+a:["Chief Executive Officer","Central Economic Officer","Corporate Executive Organization","Chief Employment Organizer"],
+c:0,
+e:"CEO means Chief Executive Officer, generally the highest-ranking executive responsible for leading an organization."
+}
+]
+
+};et selectedCategory="";
+let gameQuestions=[];
+let current=0;
+let score=0;
+let answered=false;
+
+function showCategories(){
+    document.getElementById("welcome").style.display="none";
+    document.getElementById("result").style.display="none";
+    document.getElementById("categories").style.display="block";
+
+    const box=document.getElementById("categoryButtons");
+    box.innerHTML="";
+
+    Object.keys(questionBank).forEach(category=>{
+        const b=document.createElement("button");
+        b.className="category";
+        b.innerText=category;
+        b.onclick=()=>startCategory(category);
+        box.appendChild(b);
+    });
 }
 
-];
+function shuffle(array){
+    const copy=[...array];
 
-let current = 0;
-let score = 0;
-let answered = false;
+    for(let i=copy.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [copy[i],copy[j]]=[copy[j],copy[i]];
+    }
 
-function startGame() {
-    document.getElementById("welcome").style.display = "none";
-    document.getElementById("game").style.display = "block";
-    document.getElementById("total").innerText = questions.length;
+    return copy;
+}
+
+function startCategory(category){
+    selectedCategory=category;
+    gameQuestions=shuffle(questionBank[category]);
+
+    current=0;
+    score=0;
+    answered=false;
+
+    document.getElementById("score").innerText="0";
+    document.getElementById("categories").style.display="none";
+    document.getElementById("result").style.display="none";
+    document.getElementById("game").style.display="block";
+
+    document.getElementById("categoryName").innerText=category;
+    document.getElementById("total").innerText=gameQuestions.length;
+
     showQuestion();
 }
 
-function showQuestion() {
-    answered = false;
+function showQuestion(){
+    answered=false;
 
-    const q = questions[current];
+    const q=gameQuestions[current];
 
-    document.getElementById("number").innerText = current + 1;
-    document.getElementById("question").innerText = q.question;
-    document.getElementById("explanation").innerHTML = "";
-    document.getElementById("next").style.display = "none";
+    document.getElementById("number").innerText=current+1;
+    document.getElementById("question").innerText=q.q;
+    document.getElementById("explanation").innerHTML="";
+    document.getElementById("next").style.display="none";
 
-    const answersDiv = document.getElementById("answers");
-    answersDiv.innerHTML = "";
+    const box=document.getElementById("answers");
+    box.innerHTML="";
 
-    q.answers.forEach((answer, index) => {
-        const button = document.createElement("button");
-        button.className = "answer";
-        button.innerText = answer;
-        button.onclick = () => checkAnswer(index);
-        answersDiv.appendChild(button);
+    q.a.forEach((answer,index)=>{
+        const b=document.createElement("button");
+        b.className="answer";
+        b.innerText=answer;
+        b.onclick=()=>checkAnswer(index);
+        box.appendChild(b);
     });
 }
 
-function checkAnswer(selected) {
+function checkAnswer(selected){
+    if(answered)return;
 
-    if (answered) return;
+    answered=true;
 
-    answered = true;
+    const q=gameQuestions[current];
+    const buttons=document.querySelectorAll(".answer");
 
-    const q = questions[current];
-    const buttons = document.querySelectorAll(".answer");
+    buttons.forEach((button,index)=>{
+        button.disabled=true;
 
-    buttons.forEach((button, index) => {
-        button.disabled = true;
-
-        if (index === q.correct) {
-            button.style.background = "#8ee89b";
+        if(index===q.c){
+            button.style.background="#8ee89b";
         }
 
-        if (index === selected && selected !== q.correct) {
-            button.style.background = "#ff9999";
+        if(index===selected && selected!==q.c){
+            button.style.background="#ff9999";
         }
     });
 
-    if (selected === q.correct) {
+    if(selected===q.c){
         score++;
-        document.getElementById("score").innerText = score;
 
-        document.getElementById("explanation").innerHTML =
-        "<strong>Correct!</strong><br><br>" + q.explanation;
-    } else {
-        document.getElementById("explanation").innerHTML =
-        "<strong>Not quite.</strong><br><br>" + q.explanation;
+        document.getElementById("score").innerText=score;
+
+        document.getElementById("explanation").innerHTML=
+        '<div class="correct">✓ CORRECT!</div><br>'+
+        '<span class="education">LEARN MORE:</span><br>'+q.e;
+
+    }else{
+
+        document.getElementById("explanation").innerHTML=
+        '<div class="wrong">✗ NOT QUITE</div><br>'+
+        '<strong>Correct answer: '+q.a[q.c]+'</strong><br><br>'+
+        '<span class="education">LEARN MORE:</span><br>'+q.e;
     }
 
-    document.getElementById("next").style.display = "block";
+    document.getElementById("next").style.display="block";
 }
 
-function nextQuestion() {
-
+function nextQuestion(){
     current++;
 
-    if (current < questions.length) {
+    if(current<gameQuestions.length){
         showQuestion();
-    } else {
+    }else{
         finishGame();
     }
 }
 
-function finishGame() {
+function finishGame(){
+    document.getElementById("game").style.display="none";
+    document.getElementById("result").style.display="block";
 
-    document.getElementById("game").style.display = "none";
-    document.getElementById("result").style.display = "block";
+    document.getElementById("finishedCategory").innerText=
+    selectedCategory;
 
-    document.getElementById("finalScore").innerText =
-        score + " / " + questions.length;
+    document.getElementById("finalScore").innerText=
+    score+" / "+gameQuestions.length;
 }
 
-function restartGame() {
+function playAgain(){
+    startCategory(selectedCategory);
+}
 
-    current = 0;
-    score = 0;
-
-    document.getElementById("score").innerText = "0";
-    document.getElementById("result").style.display = "none";
-    document.getElementById("game").style.display = "block";
-
-    showQuestion();
+function chooseAnother(){
+    document.getElementById("result").style.display="none";
+    showCategories();
 }
 
 </script>
