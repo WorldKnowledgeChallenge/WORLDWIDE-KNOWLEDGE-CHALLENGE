@@ -872,13 +872,24 @@ function showQuestion(){
     const box=document.getElementById("answers");
     box.innerHTML="";
 
-    q.a.forEach((answer,index)=>{
-        const b=document.createElement("button");
-        b.className="answer";
-        b.innerText=answer;
-        b.onclick=()=>checkAnswer(index);
-        box.appendChild(b);
-    });
+    const choices = q.a.map((answer,index)=>({
+    answer:answer,
+    originalIndex:index
+}));
+
+for(let i=choices.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [choices[i],choices[j]]=[choices[j],choices[i]];
+}
+
+choices.forEach(choice=>{
+    const b=document.createElement("button");
+    b.className="answer";
+    b.innerText=choice.answer;
+    b.onclick=()=>checkAnswer(choice.originalIndex);
+    b.dataset.originalIndex=choice.originalIndex;
+    box.appendChild(b);
+});
 }
 
 function checkAnswer(selected){
@@ -889,18 +900,19 @@ function checkAnswer(selected){
     const q=gameQuestions[current];
     const buttons=document.querySelectorAll(".answer");
 
-    buttons.forEach((button,index)=>{
-        button.disabled=true;
+    buttons.forEach(button=>{
+    button.disabled=true;
 
-        if(index===q.c){
-            button.style.background="#8ee89b";
-        }
+    const originalIndex=Number(button.dataset.originalIndex);
 
-        if(index===selected && selected!==q.c){
-            button.style.background="#ff9999";
-        }
-    });
+    if(originalIndex===q.c){
+        button.style.background="#8ee89b";
+    }
 
+    if(originalIndex===selected && selected!==q.c){
+        button.style.background="#ff9999";
+    }
+});
     if(selected===q.c){
         score++;
 
