@@ -901,7 +901,11 @@ function shuffle(array){
 
 function startCategory(category){
     selectedCategory=category;
-    gameQuestions=shuffle(questionBank[category]);
+   gameQuestions = shuffle(
+    [...new Map(
+        questionBank[category].map(q => [q.q.trim().toLowerCase(), q])
+    ).values()]
+).slice(0, 10);
 
     current=0;
     score=0;
