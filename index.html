@@ -1013,6 +1013,56 @@ let current=0;
 let score=0;
 let answered=false;
 
+const lastRoundQuestions = {};
+
+function startCategory(category){
+    selectedCategory = category;
+
+    const uniqueQuestions = [...new Map(
+        questionBank[category].map(q => [
+            q.q.trim().toLowerCase(), q
+        ])
+    ).values()];
+
+    const previous = new Set(
+        lastRoundQuestions[category] || []
+    );
+
+    const newQuestions = shuffle(
+        uniqueQuestions.filter(q =>
+            !previous.has(q.q.trim().toLowerCase())
+        )
+    );
+
+    const oldQuestions = shuffle(
+        uniqueQuestions.filter(q =>
+            previous.has(q.q.trim().toLowerCase())
+        )
+    );
+
+    gameQuestions = [
+        ...newQuestions,
+        ...oldQuestions
+    ].slice(0, 10);
+
+    lastRoundQuestions[category] = gameQuestions.map(
+        q => q.q.trim().toLowerCase()
+    );
+
+    current = 0;
+    score = 0;
+    answered = false;
+
+    document.getElementById("score").innerText = "0";
+    document.getElementById("categories").style.display = "none";
+    document.getElementById("result").style.display = "none";
+    document.getElementById("game").style.display = "block";
+    document.getElementById("categoryName").innerText = category;
+    document.getElementById("total").innerText = gameQuestions.length;
+
+    showQuestion();
+}
+
 function showCategories(){
     document.getElementById("welcome").style.display="none";
     document.getElementById("result").style.display="none";
