@@ -1046,28 +1046,52 @@ function shuffle(array){
 }
 
 function startCategory(category){
-    selectedCategory=category;
-   gameQuestions = shuffle(
-    [...new Map(
-        questionBank[category].map(q => [q.q.trim().toLowerCase(), q])
-    ).values()]
-).slice(0, 10);
+    selectedCategory = category;
 
-    current=0;
-    score=0;
-    answered=false;
+    const uniqueQuestions = [...new Map(
+        questionBank[category].map(q => [
+            q.q.trim().toLowerCase(), q
+        ])
+    ).values()];
 
-    document.getElementById("score").innerText="0";
-    document.getElementById("categories").style.display="none";
-    document.getElementById("result").style.display="none";
-    document.getElementById("game").style.display="block";
+    const previous = new Set(
+        lastRoundQuestions[category] || []
+    );
 
-    document.getElementById("categoryName").innerText=category;
-    document.getElementById("total").innerText=gameQuestions.length;
+    const newQuestions = shuffle(
+        uniqueQuestions.filter(q =>
+            !previous.has(q.q.trim().toLowerCase())
+        )
+    );
+
+    const oldQuestions = shuffle(
+        uniqueQuestions.filter(q =>
+            previous.has(q.q.trim().toLowerCase())
+        )
+    );
+
+    gameQuestions = [
+        ...newQuestions,
+        ...oldQuestions
+    ].slice(0, 10);
+
+    lastRoundQuestions[category] = gameQuestions.map(
+        q => q.q.trim().toLowerCase()
+    );
+
+    current = 0;
+    score = 0;
+    answered = false;
+
+    document.getElementById("score").innerText = "0";
+    document.getElementById("categories").style.display = "none";
+    document.getElementById("result").style.display = "none";
+    document.getElementById("game").style.display = "block";
+    document.getElementById("categoryName").innerText = category;
+    document.getElementById("total").innerText = gameQuestions.length;
 
     showQuestion();
 }
-
 function showQuestion(){
     answered=false;
 
