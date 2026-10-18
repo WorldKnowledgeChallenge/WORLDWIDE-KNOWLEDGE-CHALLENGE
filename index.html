@@ -1265,7 +1265,10 @@ const previous = new Set(
     lastRoundQuestions[category] = gameQuestions.map(
         q => q.q.trim().toLowerCase()
     );
-
+localStorage.setItem(
+    "wkcLastRound:" + category,
+    JSON.stringify(lastRoundQuestions[category])
+);
     current = 0;
     score = 0;
     answered = false;
