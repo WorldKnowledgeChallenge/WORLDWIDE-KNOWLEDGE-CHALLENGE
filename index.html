@@ -1239,10 +1239,11 @@ function startCategory(category){
             q.q.trim().toLowerCase(), q
         ])
     ).values()];
-
-    const previous = new Set(
-        lastRoundQuestions[category] || []
-    );
+const previous = new Set(
+    JSON.parse(
+        localStorage.getItem("wkcLastRound:" + category) || "[]"
+    )
+);
 
     const newQuestions = shuffle(
         uniqueQuestions.filter(q =>
