@@ -1,4 +1,4 @@
- <!DOCTYPE html>  
+ <!DOCTYPE html> const questionBank = { 
 /index.html
 WorldKnowledgeChallenge
 WorldKnowledgeChallenge
@@ -137,7 +137,7 @@ of <span id="total"></span>
 
 &nbsp; | &nbsp;
 
-Score: <span id="score">0</span>
+Score: <span id="score">0</span> 
 </div>
 
 <h2 id="question"></h2>
@@ -182,7 +182,141 @@ CHOOSE ANOTHER CATEGORY
 <script>
 
 const questionBank = {
-
+"JUDAISM & JEWISH HISTORY":[
+{q:"What is the weekly Jewish day of rest called?",a:["Passover","Shabbat","Purim","Hanukkah"],c:1,e:"Shabbat begins at sunset on Friday and ends after nightfall on Saturday."},
+{q:"How many books are in the Torah?",a:["Three","Four","Five","Seven"],c:2,e:"The Torah consists of Genesis, Exodus, Leviticus, Numbers and Deuteronomy."},
+{q:"Which Jewish holiday commemorates the Exodus from Egypt?",a:["Passover","Hanukkah","Purim","Sukkot"],c:0,e:"Passover commemorates the Israelites' departure from slavery in Egypt, as described in Exodus."},
+{q:"What is the Jewish New Year called?",a:["Shavuot","Yom Kippur","Purim","Rosh Hashanah"],c:3,e:"Rosh Hashanah marks the Jewish New Year and begins the Ten Days of Repentance."},
+{q:"Which holiday is known as the Day of Atonement?",a:["Sukkot","Yom Kippur","Hanukkah","Passover"],c:1,e:"Yom Kippur is a day devoted to repentance, prayer and fasting."},
+{q:"What is a traditional Jewish house of worship called?",a:["A cathedral","A monastery","A synagogue","A palace"],c:2,e:"A synagogue is a Jewish place for prayer, study and community gatherings."},
+{q:"Which language is traditionally used in Torah scrolls?",a:["Hebrew","Latin","Greek","Arabic"],c:0,e:"Torah scrolls are handwritten in Hebrew by specially trained scribes."},
+{q:"According to the Torah, who led the Israelites out of Egypt?",a:["David","Solomon","Isaiah","Moses"],c:3,e:"In the Torah's account, Moses led the Israelites out of Egypt."},
+{q:"What is the name of the first book of the Torah?",a:["Exodus","Genesis","Leviticus","Numbers"],c:1,e:"Genesis, called Bereshit in Hebrew, begins the Torah."},
+{q:"Which Jewish holiday celebrates the events told in the Book of Esther?",a:["Shavuot","Sukkot","Purim","Rosh Hashanah"],c:2,e:"Purim celebrates the deliverance of the Jews from Haman's plot in the Book of Esther."},
+{q:"How many nights does Hanukkah last?",a:["Eight","Six","Seven","Ten"],c:0,e:"Hanukkah lasts eight nights and commemorates the rededication of the Temple in Jerusalem."},
+{q:"What is the shofar traditionally made from?",a:["Glass","Wood","Silver","An animal's horn"],c:3,e:"A shofar is made from an animal's horn, commonly a ram's horn."},
+{q:"Which city  "JUDAISM & JEWISH HISTORY":[
+{
+q:"What is the Jewish weekly day of rest called?",
+a:["Passover","Shabbat","Purim","Hanukkah"],
+c:1,
+e:"Shabbat begins at sunset on Friday and ends after nightfall on Saturday. It is a time for rest, prayer and family."
+},
+{
+q:"How many books make up the Torah?",
+a:["Three","Four","Five","Seven"],
+c:2,
+e:"The Torah consists of five books: Genesis, Exodus, Leviticus, Numbers and Deuteronomy."
+},
+{
+q:"Which Jewish holiday commemorates the Exodus from Egypt?",
+a:["Passover","Purim","Hanukkah","Rosh Hashanah"],
+c:0,
+e:"Passover commemorates the Israelites' departure from slavery in Egypt, as recounted in the Book of Exodus."
+},
+{
+q:"What is a Jewish house of worship commonly called?",
+a:["Cathedral","Mosque","Monastery","Synagogue"],
+c:3,
+e:"A synagogue is a place for Jewish prayer, study and community gatherings."
+},
+{
+q:"Which language is used in the traditional text of the Torah?",
+a:["Latin","Hebrew","Greek","Arabic"],
+c:1,
+e:"The Torah is written in Hebrew, which remains central to Jewish prayer and religious study."
+},
+{
+q:"Which Jewish holiday is known as the Day of Atonement?",
+a:["Sukkot","Shavuot","Yom Kippur","Purim"],
+c:2,
+e:"Yom Kippur is a day devoted to repentance, prayer and atonement. Many Jews observe it by fasting."
+},
+{
+q:"Which Jewish holiday celebrates the Jewish New Year?",
+a:["Rosh Hashanah","Passover","Hanukkah","Shavuot"],
+c:0,
+e:"Rosh Hashanah marks the beginning of the Jewish year and a period of reflection leading to Yom Kippur."
+},
+{
+q:"What is a shofar traditionally made from?",
+a:["Wood","Glass","Silver","An animal's horn"],
+c:3,
+e:"A shofar is made from an animal's horn, commonly a ram's horn. It is sounded on Rosh Hashanah."
+},
+{
+q:"Which biblical woman is central to the story of Purim?",
+a:["Ruth","Esther","Sarah","Miriam"],
+c:1,
+e:"The Book of Esther recounts how Queen Esther helped save the Jewish people from Haman's plot in the Persian Empire."
+},
+{
+q:"How many nights does Hanukkah last?",
+a:["Five","Seven","Eight","Ten"],
+c:2,
+e:"Hanukkah lasts eight nights and commemorates the rededication of the Temple in Jerusalem during the Maccabean period."
+},
+{
+q:"What is the ceremonial Passover meal called?",
+a:["Seder","Shofar","Sukkah","Siddur"],
+c:0,
+e:"The Seder is a ritual meal at which participants retell the Exodus story using the Haggadah."
+},
+{
+q:"What is the first book of the Torah?",
+a:["Exodus","Leviticus","Deuteronomy","Genesis"],
+c:3,
+e:"Genesis, called Bereshit in Hebrew, contains the creation narratives and stories of the ancestors of the Israelites."
+},
+{
+q:"Which Jewish holiday involves spending time in a temporary shelter called a sukkah?",
+a:["Purim","Sukkot","Yom Kippur","Hanukkah"],
+c:1,
+e:"During Sukkot, Jews traditionally eat in a sukkah, recalling the Israelites' wilderness journey after leaving Egypt."
+},
+{
+q:"Which holiday is traditionally associated with receiving the Torah at Mount Sinai?",
+a:["Hanukkah","Rosh Hashanah","Shavuot","Purim"],
+c:2,
+e:"Shavuot celebrates the giving of the Torah at Mount Sinai and also has agricultural roots as a harvest festival."
+},
+{
+q:"What does the Hebrew word tzedakah commonly refer to?",
+a:["Charitable giving","A musical instrument","A holiday meal","A prayer book"],
+c:0,
+e:"Tzedakah refers to charitable giving and is connected to the Hebrew word for justice or righteousness."
+},
+{
+q:"What is a traditional Jewish prayer book called?",
+a:["Haggadah","Mezuzah","Menorah","Siddur"],
+c:3,
+e:"A siddur contains the prayers used in regular Jewish worship. Its name is connected to the Hebrew word for order."
+},
+{
+q:"Which ancient empire destroyed the Second Temple in Jerusalem in 70 CE?",
+a:["Persian Empire","Roman Empire","Ottoman Empire","British Empire"],
+c:1,
+e:"Roman forces led by Titus destroyed the Second Temple in Jerusalem in 70 CE during the First Jewish-Roman War."
+},
+{
+q:"Who wrote The Guide for the Perplexed?",
+a:["Theodor Herzl","Rashi","Maimonides","Baruch Spinoza"],
+c:2,
+e:"Maimonides, also known as the Rambam, was a medieval Jewish philosopher, physician and legal scholar."
+},
+{
+q:"What does the term Jewish diaspora describe?",
+a:["Jewish communities living outside the Land of Israel","A Jewish holiday","An ancient musical instrument","A type of synagogue"],
+c:0,
+e:"The Jewish diaspora refers to Jewish communities living outside the Land of Israel, with histories spanning many countries and centuries."
+},
+{
+q:"Which objects are traditionally placed inside a mezuzah case?",
+a:["Coins","Candles","Photographs","A parchment containing Torah passages"],
+c:3,
+e:"A mezuzah case holds a parchment inscribed with passages from Deuteronomy. It is affixed to the doorposts of Jewish homes."
+}
+],
 "GEOGRAPHY":[
 { 
 q:"What is the largest ocean on Earth?",
